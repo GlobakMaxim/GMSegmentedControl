@@ -11,8 +11,14 @@
 @interface GMSegmentedControl : UIControl
 
 @property (copy, nonatomic) NSArray <NSString *> *items;
+@property (strong, nonatomic) NSNumber *selectedSegmentIndex; // Able to be nil
+
+// Castomization
 @property (strong, nonatomic) UIColor *tintColor;
 @property (strong, nonatomic) UIColor *color;
+@property (assign, nonatomic) NSTimeInterval animateWithDuration;
+
+
 
 - (instancetype)initWithItems:(NSArray <NSString *> *)items;
 - (instancetype)initWithFrame:(CGRect)frame
