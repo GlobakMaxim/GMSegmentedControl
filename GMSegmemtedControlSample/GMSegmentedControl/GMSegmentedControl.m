@@ -38,7 +38,7 @@
 - (instancetype)initWithItems:(NSArray <NSString *> *)items {
     self = [super init];
     if (self) {
-        _items = items.copy;
+        self.items = items.copy;
         [self commonInit];
     }
     return self;
@@ -47,7 +47,7 @@
 - (instancetype)initWithFrame:(CGRect)frame andItems:(NSArray <NSString *> *)items {
     self = [super initWithFrame:frame];
     if (self) {
-        _items = items.copy;
+        self.items = items.copy;
         [self commonInit];
     }
     return self;
@@ -66,9 +66,9 @@
 }
 
 - (void)setupThumb {
-    _thumb = [[UIView alloc] init];
-    _thumb.frame = [self frameForLabelAtIndex:0];
-    _thumb.backgroundColor = _tintColor;
+    self.thumb = [[UIView alloc] init];
+    self.thumb.backgroundColor = self.tintColor;
+    [self insertSubview:self.thumb atIndex:0];
 }
 
 - (void)setupGestureRecognizer {
@@ -81,7 +81,7 @@
 
 - (void)setupLabels {
     NSMutableArray *mutableLabels = [[NSMutableArray alloc] init];
-    for (NSString *item in _items) {
+    for (NSString *item in self.items) {
         
         UILabel *itemLabel = [[UILabel alloc] init];
         itemLabel.text = item;
@@ -90,17 +90,17 @@
         [self addSubview:itemLabel];
         [mutableLabels addObject:itemLabel];
     }
-    _labels = mutableLabels.copy;
+    self.labels = mutableLabels.copy;
 }
 
 - (void)setupFrames {
-    for (int i = 0; i < _labels.count; i++) {
-        _labels[i].frame = [self frameForLabelAtIndex:i];
+    for (int i = 0; i < self.labels.count; i++) {
+        self.labels[i].frame = [self frameForLabelAtIndex:i];
     }
 }
 
 - (CGRect)frameForLabelAtIndex:(NSInteger)index {
-    CGFloat labelWidth = (CGFloat)((float)self.bounds.size.width / (float)_labels.count);
+    CGFloat labelWidth = (CGFloat)((float)self.bounds.size.width / (float)self.labels.count);
     labelWidth = isnan(labelWidth) ? 0.0 : labelWidth;
     CGFloat labelHeight = self.bounds.size.height;
     
@@ -111,7 +111,7 @@
 }
 
 - (CGRect)frameForThumbAtIndex:(NSInteger)index {
-    return _labels[index].frame;
+    return self.labels[index].frame;
 }
 
 - (void)setSelectedSegmentIndex:(NSNumber *)selectedSegmentIndex {
@@ -123,44 +123,49 @@
     
     // Check for correct range
     if (selectedSegmentIndex &&
-        selectedSegmentIndex.integerValue > _items.count &&
+        selectedSegmentIndex.integerValue > self.items.count &&
         selectedSegmentIndex.integerValue < 0) {
         selectedSegmentIndex = nil;
     }
     
     if (selectedSegmentIndex) {
-        if (_thumb.isHidden) {
-            [self showThumbAtIndex:selectedSegmentIndex.integerValue];
-        } else {
-            [self moveThumbToIndex:selectedSegmentIndex.integerValue];
-        }
+        [self setupThumbAtIndex:selectedSegmentIndex.integerValue];
     } else {
         [self hideThumb];
     }
+    _selectedSegmentIndex = selectedSegmentIndex;
 }
 
 #pragma mark - Thumb actions
 
+- (void)setupThumbAtIndex:(NSInteger)index {
+    if (self.thumb.isHidden) {
+        [self showThumbAtIndex:index];
+    } else {
+        [self moveThumbToIndex:index];
+    }
+}
+
 - (void)showThumbAtIndex:(NSInteger)index {
-    _thumb.frame = [self frameForThumbAtIndex:index];
-    _thumb.hidden = NO;
-    [UIView animateWithDuration:_animateWithDuration animations:^{
-        _thumb.alpha = 1;
+    self.thumb.frame = [self frameForThumbAtIndex:index];
+    self.thumb.hidden = NO;
+    [UIView animateWithDuration:self.animateWithDuration animations:^{
+        self.thumb.alpha = 1;
     }];
 }
 
 - (void)moveThumbToIndex:(NSInteger)index {
-    [UIView animateWithDuration:_animateWithDuration animations:^{
-        _thumb.frame = [self frameForThumbAtIndex:index];
+    [UIView animateWithDuration:self.animateWithDuration animations:^{
+        self.thumb.frame = [self frameForThumbAtIndex:index];
     }];
 }
 
 - (void)hideThumb {
-    [UIView animateWithDuration:_animateWithDuration animations:^{
-        _thumb.alpha = 0;
+    [UIView animateWithDuration:self.animateWithDuration animations:^{
+        self.thumb.alpha = 0;
     } completion:^(BOOL finished) {
         if (finished) {
-            _thumb.hidden = YES;
+            self.thumb.hidden = YES;
         }
     }];
 }
@@ -168,11 +173,32 @@
 #pragma mark - Gesture recognize
 
 - (void)tapAction:(UITapGestureRecognizer *)recognizer {
+    CGPoint touchPoint = [recognizer locationInView:self];
     
+    for (int i = 0; i < self.labels.count; i++) {
+        CGRect labelRect = self.labels[i].frame;
+        if (CGRectContainsPoint(labelRect, touchPoint)) {
+            self.selectedSegmentIndex = @(i);
+            break;
+        }
+    }
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
-    
+    switch (recognizer.state) {
+        case UIGestureRecognizerStatePossible:
+            break;
+        case UIGestureRecognizerStateBegan:
+            break;
+        case UIGestureRecognizerStateChanged:
+            break;
+        case UIGestureRecognizerStateEnded:
+            break;
+        case UIGestureRecognizerStateCancelled:
+            break;
+        case UIGestureRecognizerStateFailed:
+            break;
+    }
 }
 
 #pragma mark - Castomization
