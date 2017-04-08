@@ -13,7 +13,7 @@
 		030764C21E958F8A00743690 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030764C01E958F8A00743690 /* Main.storyboard */; };
 		030764C41E958F8A00743690 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030764C31E958F8A00743690 /* Assets.xcassets */; };
 		030764C71E958F8A00743690 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030764C51E958F8A00743690 /* LaunchScreen.storyboard */; };
-		030764D11E958FD700743690 /* GMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 030764D01E958FD700743690 /* GMSegmentedControl.m */; };
+		0382B4C31E9982B900A96453 /* GMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0382B4C21E9982B900A96453 /* GMSegmentedControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +27,8 @@
 		030764C31E958F8A00743690 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		030764C61E958F8A00743690 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		030764C81E958F8A00743690 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		030764CF1E958FD700743690 /* GMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMSegmentedControl.h; sourceTree = "<group>"; };
-		030764D01E958FD700743690 /* GMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMSegmentedControl.m; sourceTree = "<group>"; };
+		0382B4C11E9982B900A96453 /* GMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMSegmentedControl.h; sourceTree = "<group>"; };
+		0382B4C21E9982B900A96453 /* GMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMSegmentedControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 		030764B61E958F8A00743690 /* GMSegmemtedControlSample */ = {
 			isa = PBXGroup;
 			children = (
-				030764CE1E958FA800743690 /* GMSegmentedControl */,
+				0382B4C01E9982B900A96453 /* GMSegmentedControl */,
 				030764BA1E958F8A00743690 /* AppDelegate.h */,
 				030764BB1E958F8A00743690 /* AppDelegate.m */,
 				030764BD1E958F8A00743690 /* ViewController.h */,
@@ -83,14 +83,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		030764CE1E958FA800743690 /* GMSegmentedControl */ = {
+		0382B4C01E9982B900A96453 /* GMSegmentedControl */ = {
 			isa = PBXGroup;
 			children = (
-				030764CF1E958FD700743690 /* GMSegmentedControl.h */,
-				030764D01E958FD700743690 /* GMSegmentedControl.m */,
+				0382B4C11E9982B900A96453 /* GMSegmentedControl.h */,
+				0382B4C21E9982B900A96453 /* GMSegmentedControl.m */,
 			);
 			path = GMSegmentedControl;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -164,7 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				030764D11E958FD700743690 /* GMSegmentedControl.m in Sources */,
+				0382B4C31E9982B900A96453 /* GMSegmentedControl.m in Sources */,
 				030764BF1E958F8A00743690 /* ViewController.m in Sources */,
 				030764BC1E958F8A00743690 /* AppDelegate.m in Sources */,
 				030764B91E958F8A00743690 /* main.m in Sources */,
@@ -328,6 +328,7 @@
 				030764CD1E958F8A00743690 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

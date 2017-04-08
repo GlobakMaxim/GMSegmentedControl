@@ -10,6 +10,7 @@
 
 @interface GMSegmentedControl ()
 
+@property (assign, nonatomic) NSInteger selectedSegmentIndex;
 @property (copy, nonatomic) NSArray <UILabel *> *labels;
 @property (strong, nonatomic) UIView *thumb;
 
@@ -149,6 +150,7 @@
   }
   
   _selectedSegmentIndex = selectedSegmentIndex;
+  [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - Thumb actions
@@ -165,28 +167,34 @@
   NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
   self.thumb.frame = [self frameForThumbAtIndex:index];
   self.thumb.hidden = NO;
+  
+  __weak typeof(self) weakSelf = self;
   [UIView animateWithDuration:animationDuration animations:^{
-    self.thumb.alpha = 1;
-    [self updateLabelsTextColorAtIndex:index animated:animated];
+    weakSelf.thumb.alpha = 1;
+    [weakSelf updateLabelsTextColorAtIndex:index animated:animated];
   }];
 }
 
 - (void)moveThumbToIndex:(NSInteger)index animated:(BOOL)animated {
   NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
+  
+  __weak typeof(self) weakSelf = self;
   [UIView animateWithDuration:animationDuration animations:^{
-    self.thumb.frame = [self frameForThumbAtIndex:index];
-    [self updateLabelsTextColorAtIndex:index animated:animated];
+    weakSelf.thumb.frame = [weakSelf frameForThumbAtIndex:index];
+    [weakSelf updateLabelsTextColorAtIndex:index animated:animated];
   }];
 }
 
 - (void)hideThumbAnimated:(BOOL)animated {
   NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
+  
+  __weak typeof(self) weakSelf = self;
   [UIView animateWithDuration:animationDuration animations:^{
-    self.thumb.alpha = 0;
-    [self updateLabelsTextColorAtIndex:NSNotFound animated:animated];
+    weakSelf.thumb.alpha = 0;
+    [weakSelf updateLabelsTextColorAtIndex:NSNotFound animated:animated];
   } completion:^(BOOL finished) {
     if (finished) {
-      self.thumb.hidden = YES;
+      weakSelf.thumb.hidden = YES;
     }
   }];
 }
@@ -249,8 +257,9 @@
     }
   }
   
+  __weak typeof(self) weakSelf = self;
   [UIView animateWithDuration:.05 animations:^{
-    self.thumb.frame = newFrameThumb;
+    weakSelf.thumb.frame = newFrameThumb;
   }];
 }
 
@@ -258,7 +267,7 @@
 
 - (void)updateLabelsTextColorAtIndex:(NSInteger)selectedIndex animated:(BOOL)animated {
   NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
-
+  
   for (int i = 0; i < self.labels.count; i++) {
     
     [UIView
@@ -270,7 +279,7 @@
        (i == selectedIndex) ? self.selectedItemTextColor : self.tintColor;
      } completion:^(BOOL finished) {
      }];
-  }  
+  }
 }
 
 - (void)setSelectedItemTextColor:(UIColor *)selectedItemTextColor {

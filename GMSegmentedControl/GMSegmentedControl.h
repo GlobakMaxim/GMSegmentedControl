@@ -19,7 +19,9 @@ typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
 @interface GMSegmentedControl : UIControl
 
 @property (copy, nonatomic) NSArray <NSString *> *items;
-@property (assign, nonatomic) NSInteger selectedSegmentIndex;
+@property (assign, nonatomic, readonly) NSInteger selectedSegmentIndex;
+
+- (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex animated:(BOOL)animated;
 
 // Castomization
 @property (assign, nonatomic) GMSegmentedControlCornerType cornerType;
