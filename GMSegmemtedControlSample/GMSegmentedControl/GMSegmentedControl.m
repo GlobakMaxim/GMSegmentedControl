@@ -258,12 +258,19 @@
 
 - (void)updateLabelsTextColorAtIndex:(NSInteger)selectedIndex animated:(BOOL)animated {
   NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
-  [UIView animateWithDuration:animationDuration animations:^{
-    for (int i = 0; i < self.labels.count; i++) {
-      self.labels[i].textColor =
-      (i == selectedIndex) ? self.selectedItemTextColor : self.tintColor;
-    }
-  }];
+
+  for (int i = 0; i < self.labels.count; i++) {
+    
+    [UIView
+     transitionWithView:self.labels[i]
+     duration:animationDuration
+     options:UIViewAnimationOptionTransitionCrossDissolve
+     animations:^{
+       self.labels[i].textColor =
+       (i == selectedIndex) ? self.selectedItemTextColor : self.tintColor;
+     } completion:^(BOOL finished) {
+     }];
+  }  
 }
 
 - (void)setSelectedItemTextColor:(UIColor *)selectedItemTextColor {
