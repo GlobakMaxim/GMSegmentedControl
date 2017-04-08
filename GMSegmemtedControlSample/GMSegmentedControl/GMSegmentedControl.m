@@ -68,12 +68,13 @@
 }
 
 - (void)setupDefaultValues {
+  self.clipsToBounds = YES;
   self.layer.borderWidth = 1;
   self.selectedSegmentIndex = NSNotFound;
   self.cornerType = GMSegmentedControlCornerType_default;
   self.backgroundColor = [UIColor clearColor];
   self.tintColor = [UIColor greenColor];
-  self.animateWithDuration = 0.1;
+  self.animationDuration = 0.1;
   self.selectedItemTextColor = [UIColor darkGrayColor];
 }
 
@@ -128,7 +129,7 @@
   return self.labels[index].frame;
 }
 
-- (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex {
+- (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex animated:(BOOL)animated {
   
   // Deselect item
   if (_selectedSegmentIndex == selectedSegmentIndex) {
@@ -142,9 +143,9 @@
   }
   
   if (selectedSegmentIndex != NSNotFound) {
-    [self setupThumbAtIndex:selectedSegmentIndex];
+    [self setupThumbAtIndex:selectedSegmentIndex animated:animated];
   } else {
-    [self hideThumb];
+    [self hideThumbAnimated:animated];
   }
   
   _selectedSegmentIndex = selectedSegmentIndex;
@@ -152,34 +153,37 @@
 
 #pragma mark - Thumb actions
 
-- (void)setupThumbAtIndex:(NSInteger)index {
+- (void)setupThumbAtIndex:(NSInteger)index animated:(BOOL)animated {
   if (self.thumb.isHidden) {
-    [self showThumbAtIndex:index];
+    [self showThumbAtIndex:index animated:animated];
   } else {
-    [self moveThumbToIndex:index];
+    [self moveThumbToIndex:index animated:animated];
   }
 }
 
-- (void)showThumbAtIndex:(NSInteger)index {
+- (void)showThumbAtIndex:(NSInteger)index animated:(BOOL)animated {
+  NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
   self.thumb.frame = [self frameForThumbAtIndex:index];
   self.thumb.hidden = NO;
-  [UIView animateWithDuration:self.animateWithDuration animations:^{
+  [UIView animateWithDuration:animationDuration animations:^{
     self.thumb.alpha = 1;
-    [self updateLabelsTextColorAtIndex:index];
+    [self updateLabelsTextColorAtIndex:index animated:animated];
   }];
 }
 
-- (void)moveThumbToIndex:(NSInteger)index {
-  [UIView animateWithDuration:self.animateWithDuration animations:^{
+- (void)moveThumbToIndex:(NSInteger)index animated:(BOOL)animated {
+  NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
+  [UIView animateWithDuration:animationDuration animations:^{
     self.thumb.frame = [self frameForThumbAtIndex:index];
-    [self updateLabelsTextColorAtIndex:index];
+    [self updateLabelsTextColorAtIndex:index animated:animated];
   }];
 }
 
-- (void)hideThumb {
-  [UIView animateWithDuration:self.animateWithDuration animations:^{
+- (void)hideThumbAnimated:(BOOL)animated {
+  NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
+  [UIView animateWithDuration:animationDuration animations:^{
     self.thumb.alpha = 0;
-    [self updateLabelsTextColorAtIndex:NSNotFound];
+    [self updateLabelsTextColorAtIndex:NSNotFound animated:animated];
   } completion:^(BOOL finished) {
     if (finished) {
       self.thumb.hidden = YES;
@@ -195,7 +199,7 @@
   for (int i = 0; i < self.labels.count; i++) {
     CGRect labelRect = self.labels[i].frame;
     if (CGRectContainsPoint(labelRect, touchPoint)) {
-      self.selectedSegmentIndex = i;
+      [self setSelectedSegmentIndex:i animated:YES];
       break;
     }
   }
@@ -207,29 +211,64 @@
       break;
     case UIGestureRecognizerStateBegan:
       break;
-    case UIGestureRecognizerStateChanged:
+    case UIGestureRecognizerStateChanged: {
+      CGFloat delta = [recognizer locationInView:self].x - self.thumb.center.x;
+      [self dragThumbWithDeltaX:delta];
+    }
       break;
     case UIGestureRecognizerStateEnded:
-      break;
     case UIGestureRecognizerStateCancelled:
-      break;
     case UIGestureRecognizerStateFailed:
+      [self moveThumbToIndex:self.selectedSegmentIndex animated:YES];
       break;
   }
+}
+
+- (void)dragThumbWithDeltaX:(CGFloat)delta {
+  CGRect newFrameThumb = self.thumb.frame;
+  newFrameThumb.origin.x += delta;
+  
+  CGFloat maxXThumb = CGRectGetMaxX(newFrameThumb);
+  CGFloat minXThumb = CGRectGetMinX(newFrameThumb);
+  CGFloat maxXView = CGRectGetMaxX(self.bounds);
+  CGFloat minXView = CGRectGetMinX(self.bounds);
+  
+  if (maxXThumb > maxXView) {
+    newFrameThumb.origin.x = maxXView - CGRectGetWidth(newFrameThumb);
+  } else if (minXThumb < minXView) {
+    newFrameThumb.origin.x = minXView;
+  }
+  
+  CGPoint newCeter = CGPointMake(CGRectGetMidX(newFrameThumb), CGRectGetMidY(newFrameThumb));
+  for (int i = 0; i < self.labels.count; i++) {
+    if (CGRectContainsPoint(self.labels[i].frame, newCeter)) {
+      if (self.selectedSegmentIndex != i) {
+        self.selectedSegmentIndex = i;
+        [self updateLabelsTextColorAtIndex:i animated:YES];
+      }
+    }
+  }
+  
+  [UIView animateWithDuration:.05 animations:^{
+    self.thumb.frame = newFrameThumb;
+  }];
 }
 
 #pragma mark - Castomization
 
-- (void)updateLabelsTextColorAtIndex:(NSInteger)selectedIndex {
-  for (int i = 0; i < self.labels.count; i++) {
-    self.labels[i].textColor =
-    (i == selectedIndex) ? self.selectedItemTextColor : self.tintColor;
-  }
+- (void)updateLabelsTextColorAtIndex:(NSInteger)selectedIndex animated:(BOOL)animated {
+  NSTimeInterval animationDuration = animated ? self.animationDuration : 0;
+  [UIView animateWithDuration:animationDuration animations:^{
+    for (int i = 0; i < self.labels.count; i++) {
+      self.labels[i].textColor =
+      (i == selectedIndex) ? self.selectedItemTextColor : self.tintColor;
+    }
+  }];
 }
 
 - (void)setSelectedItemTextColor:(UIColor *)selectedItemTextColor {
   _selectedItemTextColor = selectedItemTextColor;
-  [self updateLabelsTextColorAtIndex:self.selectedSegmentIndex];
+  [self updateLabelsTextColorAtIndex:self.selectedSegmentIndex animated:NO];
 }
 
 - (void)setBorderColor:(UIColor *)borderColor {
@@ -240,7 +279,7 @@
 - (void)setTintColor:(UIColor *)tintColor {
   _tintColor = tintColor;
   
-  [self updateLabelsTextColorAtIndex:self.selectedSegmentIndex];
+  [self updateLabelsTextColorAtIndex:self.selectedSegmentIndex animated:NO];
   self.thumb.backgroundColor = tintColor;
   if (!self.borderColor) {
     self.layer.borderColor = tintColor.CGColor;
@@ -258,13 +297,13 @@
     case GMSegmentedControlCornerType_default:
       cornerRadius = 0;
       break;
-      case GMSegmentedControlCornerType_rounded1:
+    case GMSegmentedControlCornerType_rounded1:
       cornerRadius = 4;
       break;
-      case GMSegmentedControlCornerType_rounded2:
+    case GMSegmentedControlCornerType_rounded2:
       cornerRadius = 8;
       break;
-      case GMSegmentedControlCornerType_pill:
+    case GMSegmentedControlCornerType_pill:
       cornerRadius = self.bounds.size.height / 2;
       break;
   }

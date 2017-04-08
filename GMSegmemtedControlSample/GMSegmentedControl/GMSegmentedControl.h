@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
 
 // Castomization
 @property (assign, nonatomic) GMSegmentedControlCornerType cornerType;
-@property (assign, nonatomic) NSTimeInterval animateWithDuration;
+@property (assign, nonatomic) NSTimeInterval animationDuration;
 @property (strong, nonatomic) UIColor *tintColor;
 @property (strong, nonatomic) UIColor *selectedItemTextColor;
 @property (strong, nonatomic) UIColor *borderColor;
