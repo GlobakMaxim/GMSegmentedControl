@@ -70,13 +70,12 @@
 
 - (void)setupDefaultValues {
     self.clipsToBounds = YES;
-    self.layer.borderWidth = 1;
     self.selectedSegmentIndex = NSNotFound;
     self.cornerType = GMSegmentedControlCornerType_default;
     self.backgroundColor = [UIColor clearColor];
     self.tintColor = [UIColor greenColor];
+    self.thumbTextColor = [UIColor darkGrayColor];
     self.animationDuration = 0.1;
-    self.selectedItemTextColor = [UIColor darkGrayColor];
 }
 
 - (void)setupThumb {
@@ -127,10 +126,10 @@
 }
 
 - (CGRect)frameForThumbAtIndex:(NSInteger)index {
-    return self.labels[index].frame;
+    return CGRectInset(self.labels[index].frame, 2, 2);
 }
 
-- (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex animated:(BOOL)animated {
+- (void)selecteSegmentIndex:(NSInteger)selectedSegmentIndex animated:(BOOL)animated {
     
     // Deselect item
     if (_selectedSegmentIndex == selectedSegmentIndex) {
@@ -206,7 +205,7 @@
     for (int i = 0; i < self.labels.count; i++) {
         CGRect labelRect = self.labels[i].frame;
         if (CGRectContainsPoint(labelRect, touchPoint)) {
-            [self setSelectedSegmentIndex:i animated:YES];
+            [self selecteSegmentIndex:i animated:YES];
             break;
         }
     }
@@ -287,20 +286,15 @@
          options:UIViewAnimationOptionTransitionCrossDissolve
          animations:^{
              self.labels[i].textColor =
-             (i == selectedIndex) ? self.selectedItemTextColor : self.tintColor;
+             (i == selectedIndex) ? self.thumbTextColor : self.tintColor;
          } completion:^(BOOL finished) {
          }];
     }
 }
 
-- (void)setSelectedItemTextColor:(UIColor *)selectedItemTextColor {
-    _selectedItemTextColor = selectedItemTextColor;
+- (void)setThumbTextColor:(UIColor *)thumbTextColor {
+    _thumbTextColor = thumbTextColor;
     [self updateLabelsTextColorAtIndex:self.selectedSegmentIndex animated:NO];
-}
-
-- (void)setBorderColor:(UIColor *)borderColor {
-    _borderColor = borderColor;
-    self.layer.borderColor = borderColor.CGColor;
 }
 
 - (void)setTintColor:(UIColor *)tintColor {
@@ -308,9 +302,6 @@
     
     [self updateLabelsTextColorAtIndex:self.selectedSegmentIndex animated:NO];
     self.thumb.backgroundColor = tintColor;
-    if (!self.borderColor) {
-        self.layer.borderColor = tintColor.CGColor;
-    }
 }
 
 - (void)setCornerType:(GMSegmentedControlCornerType)cornerType {
@@ -320,22 +311,27 @@
 
 - (void)updateCornerRadiusWithType:(GMSegmentedControlCornerType)cornerType {
     CGFloat cornerRadius;
+    CGFloat thumbCornerRadius;
     switch (cornerType) {
         case GMSegmentedControlCornerType_default:
             cornerRadius = 0;
+            thumbCornerRadius = 0;
             break;
         case GMSegmentedControlCornerType_rounded1:
             cornerRadius = 4;
+            thumbCornerRadius = 4;
             break;
         case GMSegmentedControlCornerType_rounded2:
             cornerRadius = 8;
+            thumbCornerRadius = 8;
             break;
         case GMSegmentedControlCornerType_pill:
             cornerRadius = self.bounds.size.height / 2;
+            thumbCornerRadius = self.thumb.bounds.size.height / 2;
             break;
     }
     self.layer.cornerRadius = cornerRadius;
-    self.thumb.layer.cornerRadius = cornerRadius;
+    self.thumb.layer.cornerRadius = thumbCornerRadius;
 }
 
 @end
