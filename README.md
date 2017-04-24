@@ -11,7 +11,7 @@
 ```objective-c
   NSArray *segments = @[@"First", @"Second", @"Third"];
   
-  GMSegmentedControl *segmentedControl = [[GMSegmentedControl alloc] initWithItems:segments];
+  GMSegmentedControl *segmentedControl = [[GMSegmentedControl alloc] initWithSegments:segments];
   segmentedControl.frame = CGRectMake(0, 0, 300, 40);
   segmentedControl.center = self.view.center;
   segmentedControl.cornerType = GMSegmentedControlCornerType_pill;
@@ -29,7 +29,6 @@
 
 ```objective-c
   self.clipsToBounds = YES;
-  self.layer.borderWidth = 1;
   self.selectedSegmentIndex = NSNotFound;
   self.cornerType = GMSegmentedControlCornerType_default;
   self.backgroundColor = [UIColor clearColor];
@@ -45,6 +44,6 @@ typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
   GMSegmentedControlCornerType_default, 	// cornerRadius = 0
   GMSegmentedControlCornerType_rounded1, 	// cornerRadius = 4
   GMSegmentedControlCornerType_rounded2, 	// cornerRadius = 8
-  GMSegmentedControlCornerType_pill, 		// cornerRadius = half height
+  GMSegmentedControlCornerType_pill, 		  // cornerRadius = half height
 };
 ```
