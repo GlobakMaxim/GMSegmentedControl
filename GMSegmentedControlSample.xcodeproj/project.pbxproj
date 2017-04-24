@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		030764B41E958F8A00743690 /* GMSegmemtedControlSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GMSegmemtedControlSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		030764B41E958F8A00743690 /* GMSegmentedControlSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GMSegmentedControlSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		030764B81E958F8A00743690 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		030764BA1E958F8A00743690 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		030764BB1E958F8A00743690 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -45,7 +45,7 @@
 		030764AB1E958F8900743690 = {
 			isa = PBXGroup;
 			children = (
-				030764B61E958F8A00743690 /* GMSegmemtedControlSample */,
+				030764B61E958F8A00743690 /* GMSegmentedControlSample */,
 				030764B51E958F8A00743690 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,12 +53,12 @@
 		030764B51E958F8A00743690 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				030764B41E958F8A00743690 /* GMSegmemtedControlSample.app */,
+				030764B41E958F8A00743690 /* GMSegmentedControlSample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		030764B61E958F8A00743690 /* GMSegmemtedControlSample */ = {
+		030764B61E958F8A00743690 /* GMSegmentedControlSample */ = {
 			isa = PBXGroup;
 			children = (
 				0382B4C01E9982B900A96453 /* GMSegmentedControl */,
@@ -72,7 +72,7 @@
 				030764C81E958F8A00743690 /* Info.plist */,
 				030764B71E958F8A00743690 /* Supporting Files */,
 			);
-			path = GMSegmemtedControlSample;
+			path = GMSegmentedControlSample;
 			sourceTree = "<group>";
 		};
 		030764B71E958F8A00743690 /* Supporting Files */ = {
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		030764B31E958F8A00743690 /* GMSegmemtedControlSample */ = {
+		030764B31E958F8A00743690 /* GMSegmentedControlSample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 030764CB1E958F8A00743690 /* Build configuration list for PBXNativeTarget "GMSegmemtedControlSample" */;
+			buildConfigurationList = 030764CB1E958F8A00743690 /* Build configuration list for PBXNativeTarget "GMSegmentedControlSample" */;
 			buildPhases = (
 				030764B01E958F8A00743690 /* Sources */,
 				030764B11E958F8A00743690 /* Frameworks */,
@@ -107,9 +107,9 @@
 			);
 			dependencies = (
 			);
-			name = GMSegmemtedControlSample;
+			name = GMSegmentedControlSample;
 			productName = GMSegmemtedControlSample;
-			productReference = 030764B41E958F8A00743690 /* GMSegmemtedControlSample.app */;
+			productReference = 030764B41E958F8A00743690 /* GMSegmentedControlSample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,7 +128,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 030764AF1E958F8900743690 /* Build configuration list for PBXProject "GMSegmemtedControlSample" */;
+			buildConfigurationList = 030764AF1E958F8900743690 /* Build configuration list for PBXProject "GMSegmentedControlSample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -141,7 +141,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				030764B31E958F8A00743690 /* GMSegmemtedControlSample */,
+				030764B31E958F8A00743690 /* GMSegmentedControlSample */,
 			);
 		};
 /* End PBXProject section */
@@ -291,10 +291,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3QGTHWAQW2;
-				INFOPLIST_FILE = GMSegmemtedControlSample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/GMSegmentedControlSample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ItellaConnexions.GMSegmemtedControlSample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ItellaConnexions.GMSegmentedControlSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -306,10 +306,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3QGTHWAQW2;
-				INFOPLIST_FILE = GMSegmemtedControlSample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/GMSegmentedControlSample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ItellaConnexions.GMSegmemtedControlSample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ItellaConnexions.GMSegmentedControlSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -318,7 +318,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		030764AF1E958F8900743690 /* Build configuration list for PBXProject "GMSegmemtedControlSample" */ = {
+		030764AF1E958F8900743690 /* Build configuration list for PBXProject "GMSegmentedControlSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				030764C91E958F8A00743690 /* Debug */,
@@ -327,7 +327,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		030764CB1E958F8A00743690 /* Build configuration list for PBXNativeTarget "GMSegmemtedControlSample" */ = {
+		030764CB1E958F8A00743690 /* Build configuration list for PBXNativeTarget "GMSegmentedControlSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				030764CC1E958F8A00743690 /* Debug */,
