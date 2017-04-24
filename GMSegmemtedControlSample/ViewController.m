@@ -12,6 +12,8 @@
 
 @interface ViewController ()
 
+@property (strong, nonatomic) IBOutlet GMSegmentedControl *segmentedControl;
+
 @end
 
 @implementation ViewController
@@ -21,20 +23,14 @@
   
   NSArray *segments = @[@"First", @"Second", @"Third"];
   
-    UISegmentedControl *sc = [[UISegmentedControl alloc] initWithItems:segments];
-    
-  GMSegmentedControl *segmentedControl = [[GMSegmentedControl alloc] initWithItems:segments];
-  segmentedControl.frame = CGRectMake(0, 0, 300, 40);
-  segmentedControl.center = self.view.center;
-  segmentedControl.cornerType = GMSegmentedControlCornerType_pill;
-  segmentedControl.backgroundColor = [UIColor colorWithRed:0.000 green:0.745 blue:0.486 alpha:1.00];
-  segmentedControl.tintColor = [UIColor whiteColor];
-  [segmentedControl addTarget:self
-                       action:@selector(segmentedControlValueChanged:)
-             forControlEvents:UIControlEventValueChanged];
-
   
-  [self.view addSubview:segmentedControl];
+  self.segmentedControl.segments = segments;
+  self.segmentedControl.cornerType = GMSegmentedControlCornerType_pill;
+  self.segmentedControl.backgroundColor = [UIColor colorWithRed:0.000 green:0.745 blue:0.486 alpha:1.00];
+  self.segmentedControl.tintColor = [UIColor whiteColor];
+  [self.segmentedControl addTarget:self
+                            action:@selector(segmentedControlValueChanged:)
+                  forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)segmentedControlValueChanged:(GMSegmentedControl *)sender {
