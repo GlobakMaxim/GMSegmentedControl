@@ -1,0 +1,7 @@
+language: objective-c
+xcode_project: GMSegmentedControlSample.xcodeproj # path to your xcodeproj folder
+xcode_scheme: GMSegmentedControlSample
+osx_image: xcode8.3
+xcode_sdk: iphonesimulator9.3
+os: osx
+
