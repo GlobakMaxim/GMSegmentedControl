@@ -14,7 +14,7 @@
   GMSegmentedControl *segmentedControl = [[GMSegmentedControl alloc] initWithSegments:segments];
   segmentedControl.frame = CGRectMake(0, 0, 300, 40);
   segmentedControl.center = self.view.center;
-  segmentedControl.cornerType = GMSegmentedControlCornerType_pill;
+  segmentedControl.cornerType = GMSegmentedControlCornerTypePill;
   segmentedControl.backgroundColor = [UIColor greenColor];
   segmentedControl.borderColor = [UIColor greenColor];
   segmentedControl.tintColor = [UIColor whiteColor];
@@ -41,9 +41,9 @@
 
 ```objective-c
 typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
-  GMSegmentedControlCornerType_default, 	// cornerRadius = 0
-  GMSegmentedControlCornerType_rounded1, 	// cornerRadius = 4
-  GMSegmentedControlCornerType_rounded2, 	// cornerRadius = 8
-  GMSegmentedControlCornerType_pill, 		  // cornerRadius = half height
+  GMSegmentedControlCornerTypeDefault,    // cornerRadius = 0
+  GMSegmentedControlCornerTypeRounded1,   // cornerRadius = 4
+  GMSegmentedControlCornerTypeRounded2,   // cornerRadius = 8
+  GMSegmentedControlCornerTypePill,       // cornerRadius = half height
 };
 ```
