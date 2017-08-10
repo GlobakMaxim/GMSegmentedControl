@@ -1,6 +1,5 @@
 //
 //  GMSegmentedControl.h
-//  GMSegmentedControlSample
 //
 //  Created by Maxim Globak on 05.04.17.
 //  Copyright © 2017 Maxim Globak. All rights reserved.
@@ -9,17 +8,20 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
-  GMSegmentedControlCornerType_default,
-  GMSegmentedControlCornerType_rounded1,
-  GMSegmentedControlCornerType_rounded2,
-  GMSegmentedControlCornerType_pill,
+    GMSegmentedControlCornerTypeDefault,
+    GMSegmentedControlCornerTypeRounded1,
+    GMSegmentedControlCornerTypeRounded2,
+    GMSegmentedControlCornerTypePill,
 };
-
 
 @interface GMSegmentedControl : UIControl
 
-@property (copy, nonatomic) NSArray <NSString *> *segments;
-@property (assign, nonatomic, readonly) NSInteger selectedSegmentIndex;
+- (instancetype)initWithSegments:(NSArray <NSString *> *)segments;
+- (instancetype)initWithFrame:(CGRect)frame andSegments:(NSArray <NSString *> *)segments;
+
+@property (nonatomic, copy) NSArray <NSString *> *segments;
+@property (nonatomic, readonly, assign) NSInteger selectedSegmentIndex;
+@property (nonatomic, assign) BOOL enableDeselecting;
 
 - (void)selecteSegmentIndex:(NSInteger)selectedSegmentIndex animated:(BOOL)animated;
 
@@ -31,16 +33,11 @@ typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
 - (NSString *)titleForSegmentAtIndex:(NSUInteger)segment;
 
 // Castomization
-@property (assign, nonatomic) GMSegmentedControlCornerType cornerType;
-@property (assign, nonatomic) NSTimeInterval animationDuration;
+@property (nonatomic, assign) GMSegmentedControlCornerType cornerType;
+@property (nonatomic, assign) NSTimeInterval animationDuration;
 
-// Tint color for thumb 
-@property (strong, nonatomic) UIColor *tintColor;
-@property (strong, nonatomic) UIColor *thumbTextColor;
-
-
-- (instancetype)initWithSegments:(NSArray <NSString *> *)segments;
-- (instancetype)initWithFrame:(CGRect)frame
-                  andSegments:(NSArray <NSString *> *)segments;
+// Tint color for thumb
+@property (nonatomic, strong) UIColor *tintColor;
+@property (nonatomic, strong) UIColor *thumbTextColor;
 
 @end
