@@ -15,9 +15,6 @@
   segmentedControl.frame = CGRectMake(0, 0, 300, 40);
   segmentedControl.center = self.view.center;
   segmentedControl.cornerType = GMSegmentedControlCornerTypePill;
-  segmentedControl.backgroundColor = [UIColor greenColor];
-  segmentedControl.borderColor = [UIColor greenColor];
-  segmentedControl.tintColor = [UIColor whiteColor];
   [segmentedControl addTarget:self
                        action:@selector(segmentedControlValueChanged:)
              forControlEvents:UIControlEventValueChanged];
@@ -28,13 +25,14 @@
 ## Default settings
 
 ```objective-c
-  self.clipsToBounds = YES;
-  self.selectedSegmentIndex = NSNotFound;
-  self.cornerType = GMSegmentedControlCornerType_default;
-  self.backgroundColor = [UIColor clearColor];
-  self.tintColor = [UIColor greenColor];
-  self.animationDuration = 0.1;
-  self.selectedItemTextColor = [UIColor darkGrayColor];
+self.clipsToBounds = YES;
+self.selectedSegmentIndex = NSNotFound;
+self.cornerType = GMSegmentedControlCornerTypeDefault;
+self.backgroundColor = [UIColor blueColor];
+self.tintColor = [UIColor whiteColor];
+self.thumbTextColor = [UIColor darkGrayColor];
+self.animationDuration = 0.1;
+self.enableDeselecting = YES;
 ```
 
 ## Corner radius
