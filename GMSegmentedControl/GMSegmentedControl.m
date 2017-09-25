@@ -40,8 +40,8 @@
 - (instancetype)initWithSegments:(NSArray <NSString *> *)segments {
     self = [super init];
     if (self) {
-        self.segments = segments.copy;
         [self commonInit];
+        self.segments = segments.copy;
     }
     return self;
 }
@@ -49,8 +49,8 @@
 - (instancetype)initWithFrame:(CGRect)frame andSegments:(NSArray <NSString *> *)segments {
     self = [super initWithFrame:frame];
     if (self) {
-        self.segments = segments.copy;
         [self commonInit];
+        self.segments = segments.copy;
     }
     return self;
 }
@@ -73,8 +73,8 @@
     self.clipsToBounds = YES;
     self.selectedSegmentIndex = NSNotFound;
     self.cornerType = GMSegmentedControlCornerTypeDefault;
-    self.backgroundColor = [UIColor clearColor];
-    self.tintColor = [UIColor greenColor];
+    self.backgroundColor = [UIColor blueColor];
+    self.tintColor = [UIColor whiteColor];
     self.thumbTextColor = [UIColor darkGrayColor];
     self.animationDuration = 0.1;
     self.enableDeselecting = YES;
@@ -85,7 +85,7 @@
     self.thumb.backgroundColor = self.tintColor.CGColor;
     self.thumb.opacity = 0;
     self.thumb.hidden = YES;
-    [self.layer addSublayer:self.thumb];
+    [self.layer insertSublayer:self.thumb above:self.layer];
     
     if (self.labels.count > 0) {
         self.thumb.frame = self.labels.firstObject.frame;
@@ -133,11 +133,10 @@
 }
 
 - (CGRect)frameForLabelAtIndex:(NSInteger)index {
-    CGFloat labelWidth = (CGFloat)((float)self.bounds.size.width / (float)self.labels.count);
-    labelWidth = isnan(labelWidth) ? 0.0 : labelWidth;
+    CGFloat labelWidth = self.bounds.size.width / self.labels.count;
+    if (isnan(labelWidth)) labelWidth = 0.0;
     CGFloat labelHeight = self.bounds.size.height;
-    
-    CGFloat labelX = (float)labelWidth * (float)index;
+    CGFloat labelX = labelWidth * index;
     CGFloat labelY = 0;
     
     return CGRectMake(labelX, labelY, labelWidth, labelHeight);
@@ -189,15 +188,16 @@
     self.thumb.frame = [self frameForThumbAtIndex:index];
     self.thumb.hidden = NO;
     
+    __weak typeof(self) weakSelf = self;
+    void (^action)(void) = ^(){
+        weakSelf.thumb.opacity = 1;
+        [weakSelf updateLabelsTextColorAtIndex:index animated:NO];
+    };
+    
     if (animated) {
-        __weak typeof(self) weakSelf = self;
-        [UIView animateWithDuration:self.animationDuration animations:^{
-            weakSelf.thumb.opacity = 1;
-            [weakSelf updateLabelsTextColorAtIndex:index animated:NO];
-        }];
+        [UIView animateWithDuration:self.animationDuration animations:action];
     } else {
-        self.thumb.opacity = 1;
-        [self updateLabelsTextColorAtIndex:index animated:NO];
+        action();
     }
 }
 
@@ -207,18 +207,20 @@
 }
 
 - (void)hideThumbAnimated:(BOOL)animated {
+    __weak typeof(self) weakSelf = self;
+    void (^action)(void) = ^() {
+        weakSelf.thumb.opacity = 0;
+        [weakSelf updateLabelsTextColorAtIndex:NSNotFound animated:animated];
+    };
+    void (^completion)(BOOL) = ^(BOOL finished) {
+        weakSelf.thumb.hidden = finished;
+    };
+    
     if (animated) {
-        __weak typeof(self) weakSelf = self;
-        [UIView animateWithDuration:self.animationDuration animations:^{
-            weakSelf.thumb.opacity = 0;
-            [weakSelf updateLabelsTextColorAtIndex:NSNotFound animated:animated];
-        } completion:^(BOOL finished) {
-            weakSelf.thumb.hidden = finished;
-        }];
+        [UIView animateWithDuration:self.animationDuration animations:action completion:completion];
     } else {
-        self.thumb.opacity = 0;
-        [self updateLabelsTextColorAtIndex:NSNotFound animated:animated];
-        self.thumb.hidden = YES;
+        action();
+        completion(YES);
     }
 }
 
@@ -286,16 +288,15 @@
 }
 
 - (void)handlePan:(UIGestureRecognizer *)recognizer {
-    if (!self.enabled) {
-        return;
-    }
+    if (!self.enabled) return;
     
     CGPoint location = [recognizer locationInView:self];
     switch (recognizer.state) {
         case UIGestureRecognizerStatePossible:
             break;
-        case UIGestureRecognizerStateBegan:
+        case UIGestureRecognizerStateBegan: {
             [self startTumbInPoint:location];
+        }
             break;
         case UIGestureRecognizerStateChanged: {
             CGFloat delta = location.x - CGRectGetMidX(self.thumb.frame);
@@ -320,6 +321,9 @@
 }
 
 - (void)dragThumbWithDeltaX:(CGFloat)delta {
+    // Guard
+    if (isnan(delta)) return;
+    
     CGRect newFrameThumb = self.thumb.frame;
     newFrameThumb.origin.x += delta;
     
@@ -419,3 +423,4 @@
 }
 
 @end
+

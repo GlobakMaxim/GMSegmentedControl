@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/iosDev/Apps/GMSegmentedControl/GMSegmentedControlSample.xcodeproj">
+      location = "self:GMSegmentedControlSample.xcodeproj">
    </FileRef>
 </Workspace>
