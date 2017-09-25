@@ -13,9 +13,9 @@
 @property (nonatomic, copy) NSArray <UILabel *> *labels;
 @property (nonatomic, strong) CALayer *thumb;
 
+@property (nonatomic, assign) CGFloat kBorderWidth;
+
 @end
-
-
 
 @implementation GMSegmentedControl
 
@@ -78,6 +78,7 @@
     self.thumbTextColor = [UIColor darkGrayColor];
     self.animationDuration = 0.1;
     self.enableDeselecting = YES;
+    self.kBorderWidth = 2;
 }
 
 - (void)setupThumb {
@@ -143,7 +144,7 @@
 }
 
 - (CGRect)frameForThumbAtIndex:(NSInteger)index {
-    return CGRectInset(self.labels[index].frame, 2, 2);
+    return CGRectInset(self.labels[index].frame, _kBorderWidth, _kBorderWidth);
 }
 
 - (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex {
@@ -406,11 +407,11 @@
             thumbCornerRadius = 0;
             break;
         case GMSegmentedControlCornerTypeRounded1:
-            cornerRadius = 4;
+            cornerRadius = 4 + _kBorderWidth;
             thumbCornerRadius = 4;
             break;
         case GMSegmentedControlCornerTypeRounded2:
-            cornerRadius = 8;
+            cornerRadius = 8 + _kBorderWidth;
             thumbCornerRadius = 8;
             break;
         case GMSegmentedControlCornerTypePill:

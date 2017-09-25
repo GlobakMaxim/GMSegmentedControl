@@ -4,7 +4,7 @@
 * Swipeable
 * Nullable (Able to deselect segment)
 
-![Sample](./sample.gif)
+![Sample](./images/sample.gif)
 
 ## Installation
 
@@ -52,6 +52,23 @@ typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
   GMSegmentedControlCornerTypePill,       // cornerRadius = half height
 };
 ```
+
+* GMSegmentedControlCornerTypeDefault
+
+![GMSegmentedControlCornerTypeDefault](./images/GMSegmentedControlCornerTypeDefault.png)
+
+* GMSegmentedControlCornerTypeRounded1
+
+![GMSegmentedControlCornerTypeRounded1](./images/GMSegmentedControlCornerTypeRounded1.png)
+
+* GMSegmentedControlCornerTypeRounded2
+
+![GMSegmentedControlCornerTypeRounded2](./images/GMSegmentedControlCornerTypeRounded2.png)
+
+* GMSegmentedControlCornerTypePill
+
+![GMSegmentedControlCornerTypePill](./images/GMSegmentedControlCornerTypePill.png)
+
 
 ## License
 
