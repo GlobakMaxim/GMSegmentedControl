@@ -22,9 +22,7 @@ pod 'GMSegmentedControl'
   segmentedControl.frame = CGRectMake(0, 0, 300, 40);
   segmentedControl.center = self.view.center;
   segmentedControl.cornerType = GMSegmentedControlCornerTypePill;
-  [segmentedControl addTarget:self
-                       action:@selector(segmentedControlValueChanged:)
-             forControlEvents:UIControlEventValueChanged];
+  [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 
   [self.view addSubview:segmentedControl];
 ```
