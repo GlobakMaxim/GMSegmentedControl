@@ -6,6 +6,13 @@
 
 ![Sample](./sample.gif)
 
+## Installation
+
+Cocoapods
+```
+pod 'GMSegmentedControl'
+```
+
 ## Usage
 
 ```objective-c
@@ -45,3 +52,7 @@ typedef NS_ENUM(NSInteger, GMSegmentedControlCornerType) {
   GMSegmentedControlCornerTypePill,       // cornerRadius = half height
 };
 ```
+
+## License
+
+GMSegmentedControl is licensed under the terms of the MIT License. Please see the [LICENSE](./LICENSE.md) file for full details.
